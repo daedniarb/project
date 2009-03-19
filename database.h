@@ -48,8 +48,8 @@ namespace client_server {
 
   private:
     std::map<size_t, Newsgroup> groups;
-    size_t newsgroupCount; // Used to create unique ID numbers for newsgroups
-
+    size_t newsgroupCount; // Used to create unique ID numbers for Newsgroups
+    size_t articleCount;   // Used to create unique ID numbers for Articles
 
   };
 

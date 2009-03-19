@@ -21,7 +21,7 @@ namespace client_server {
     // Creates a diskdatabase with the root of the 
     // newsgroup-directory placed in directory..!
     // directory can be either a relative or absolute address.
-    DiskDatabase(char* directory);
+    DiskDatabase(const char* directory);
     
     // Creates a diskdatabase with the root of the 
     // newsgroup-directory placed in "newsgroups".

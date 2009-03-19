@@ -19,7 +19,7 @@ namespace client_server {
     setHighestId();
   }
 
-  DiskDatabase::DiskDatabase(char* directory) {
+  DiskDatabase::DiskDatabase(const char* directory) {
     openRootDirectory(directory);
     setHighestId();
   }

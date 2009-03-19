@@ -24,11 +24,11 @@ namespace client_server {
 	/** Create a message handler.
 	    @param c The connection to use messages
 	*/
-	MessageHandler(Connection &c);
+	MessageHandler(Connection* c);
 
 	/** Basic destructor
 	 */
-	~MessageHandler();
+	~MessageHandler() {}
 
 	/** Set the log window to use.
 	    @param logWindow The log window
@@ -85,7 +85,7 @@ namespace client_server {
 
     private:
 
-	Connection conn;    	// the connection
+	Connection* conn;    	// the connection
 //	Logger &logWindow; 			// the log window
 
 	void sendByte(int code) const throw(ConnectionClosedException);

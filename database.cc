@@ -7,6 +7,7 @@ namespace client_server {
     Database::Database()
     {
 	newsgroupCount = 0;
+	articleCount = 0;
     }
 
     // Return the number of newsgroups in the database
@@ -85,10 +86,10 @@ namespace client_server {
 
 
     // Add an article to the specified newsgroup.
-  void Database::addArticle(size_t newsgroupID, const std::string& title, const std::string& author, const std::string& text) throw(NoNewsgroupException)
+    void Database::addArticle(size_t newsgroupID, const std::string& title, const std::string& author, const std::string& text) throw(NoNewsgroupException)
     {
-      // FIXME o_O
-      Article article(0, title, author, text);
+	Article article(articleCount++, title, author, text);
+
 	std::map<size_t, Newsgroup>::iterator res = groups.find(newsgroupID);
 
 	if(res == groups.end())

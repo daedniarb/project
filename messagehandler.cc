@@ -10,7 +10,7 @@ private Logger logWindow;     // the log window
 
 namespace client_server {
 
-    MessageHandler::MessageHandler(Connection &c)
+    MessageHandler::MessageHandler(Connection* c)
     {
 	conn = c;
     }
@@ -83,7 +83,7 @@ namespace client_server {
 	    throw ProtocolViolationException();
 	std::string result = sizettostring(n);
 	for (int i = 1; i<=n; i++) {
-	    char ch = static_cast<char>(conn.read());
+	    char ch = static_cast<char>(conn->read());
 	    result+=ch;
 	    // logWindow.push_back(static_cast<int>(ch));
 	}
@@ -93,14 +93,14 @@ namespace client_server {
  
     void MessageHandler::sendByte(int code) const throw(ConnectionClosedException){
 	try{
-	    conn.write(static_cast<unsigned char> (code));
+	    conn->write(static_cast<unsigned char> (code));
 	}catch(ConnectionClosedException){
 	    throw ConnectionClosedException();
 		}
     }
     int MessageHandler::recvByte() const throw(ConnectionClosedException){
-	int code = conn.read();
-	if (!conn.isConnected())
+	int code = conn->read();
+	if (!conn->isConnected())
 	    throw ConnectionClosedException();
 	return code;
     }

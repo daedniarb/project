@@ -18,11 +18,13 @@ SRC	= $(wildcard *.cc)
 OBJ	= $(SRC:.cc=.o)
 
 # Executables
-PROGS	= databasetest
+PROGS	= databasetest newsservertest
 
 all: $(PROGS)
 
-databasetest: databasetest.o diskdatabase.o database.o databaseinterface.o article.o newsgroup.o util.o connection.o messagehandler.o
+databasetest: databasetest.o diskdatabase.o database.o databaseinterface.o article.o newsgroup.o util.o
+
+newsservertest: newsservertest.o diskdatabase.o database.o databaseinterface.o article.o newsgroup.o util.o newsserver.o server.o connection.o messagehandler.o
 
 clean:
 	rm -f *.o

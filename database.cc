@@ -11,14 +11,14 @@ namespace client_server {
     }
 
     // Return the number of newsgroups in the database
-    size_t Database::numberOfNewsgroups() const
+  size_t Database::numberOfNewsgroups() const throw(DiskException)
     {
 	return groups.size();
     }
     
     // Return a list of the identification numbers and names of the
     // newsgroups in the database ordered by increasing ID numbers
-    std::vector<Newsgroup> Database::listNewsgroups() const
+  std::vector<Newsgroup> Database::listNewsgroups() const throw(DiskException)
     {
 	std::vector<Newsgroup> res;
 	std::map<size_t, Newsgroup>::const_iterator it;
@@ -40,7 +40,7 @@ namespace client_server {
     };
 
     // Create a newsgroup.
-    void Database::createNewsgroup(std::string name) throw(NewsgroupExistsException)
+    void Database::createNewsgroup(std::string name) throw(NewsgroupExistsException, DiskException)
     {
 	// Have to check if the name has been used earlier. Map:s find is only defined for searching through keys. 
 	std::map<size_t, Newsgroup>::iterator res = find_if(groups.begin(), groups.end(), bind2nd(compName(), name));
@@ -54,7 +54,7 @@ namespace client_server {
 
 
     // Delete a newsgroup.
-    void Database::deleteNewsgroup(size_t ID) throw(NoNewsgroupException)
+    void Database::deleteNewsgroup(size_t ID) throw(NoNewsgroupException, DiskException)
     {
 	std::map<size_t, Newsgroup>::iterator res = groups.find(ID);
 
@@ -68,7 +68,7 @@ namespace client_server {
 
     // Return a list of identification numbers and titles of the articles
     // in the newsgroup with the specified ID number if it exists.
-    std::vector<Article> Database::listArticles(size_t newsgroupID) throw(NoNewsgroupException)
+    std::vector<Article> Database::listArticles(size_t newsgroupID) throw(NoNewsgroupException, DiskException)
     {
 	std::map<size_t, Newsgroup>::iterator res = groups.find(newsgroupID);
 
@@ -86,7 +86,7 @@ namespace client_server {
 
 
     // Add an article to the specified newsgroup.
-    void Database::addArticle(size_t newsgroupID, const std::string& title, const std::string& author, const std::string& text) throw(NoNewsgroupException)
+    void Database::addArticle(size_t newsgroupID, const std::string& title, const std::string& author, const std::string& text) throw(NoNewsgroupException, DiskException)
     {
 	Article article(articleCount++, title, author, text);
 
@@ -99,7 +99,7 @@ namespace client_server {
     }
 
     // Delete an article in the specified newsgroup.
-    void Database::deleteArticle(size_t newsgroupID, size_t articleID) throw(NoNewsgroupException, NoArticleException)
+    void Database::deleteArticle(size_t newsgroupID, size_t articleID) throw(NoNewsgroupException, NoArticleException, DiskException)
     {
 	std::map<size_t, Newsgroup>::iterator res = groups.find(newsgroupID);
 
@@ -111,7 +111,7 @@ namespace client_server {
 
 
     // Returns a specified article in a newsgroup.  
-    Article Database::getArticle(size_t newsgroupID, size_t articleID) throw(NoNewsgroupException, NoArticleException)
+    Article Database::getArticle(size_t newsgroupID, size_t articleID) throw(NoNewsgroupException, NoArticleException, DiskException)
     {
 	std::map<size_t, Newsgroup>::const_iterator res = groups.find(newsgroupID);
 	

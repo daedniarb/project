@@ -21,30 +21,30 @@ namespace client_server {
     Database();
 
     // Return the number of newsgroups in the database
-    size_t numberOfNewsgroups() const;
+    size_t numberOfNewsgroups() const throw(DiskException);
 	
     // Return a list of the identification numbers and names of the
     // newsgroups in the database ordered by increasing ID numbers
-    std::vector<Newsgroup> listNewsgroups() const;
+    std::vector<Newsgroup> listNewsgroups() const throw(DiskException);
 
     // Create a newsgroup.
-    void createNewsgroup(std::string name) throw(NewsgroupExistsException);
+    void createNewsgroup(std::string name) throw(NewsgroupExistsException, DiskException);
 	
     // Delete a newsgroup.
-    void deleteNewsgroup(size_t ID) throw(NoNewsgroupException);
+    void deleteNewsgroup(size_t ID) throw(NoNewsgroupException, DiskException);
 
     // Return a list of identification numbers and titles of the articles
     // in the newsgroup with the specified ID number if it exists.
-    std::vector<Article> listArticles(size_t newsgroupID) throw(NoNewsgroupException);
+    std::vector<Article> listArticles(size_t newsgroupID) throw(NoNewsgroupException, DiskException);
 
     // Add an article to the specified newsgroup.
-    void addArticle(size_t newsgroupID, const std::string& title, const std::string& author, const std::string& text) throw(NoNewsgroupException);
+    void addArticle(size_t newsgroupID, const std::string& title, const std::string& author, const std::string& text) throw(NoNewsgroupException, DiskException);
 
     // Delete an article in the specified newsgroup.
-    void deleteArticle(size_t newsgroupID, size_t articleID) throw(NoNewsgroupException, NoArticleException);
+    void deleteArticle(size_t newsgroupID, size_t articleID) throw(NoNewsgroupException, NoArticleException, DiskException);
 
     // Returns a specified article in a newsgroup.  
-    Article getArticle(size_t newsgroupID, size_t articleID) throw(NoNewsgroupException, NoArticleException);
+    Article getArticle(size_t newsgroupID, size_t articleID) throw(NoNewsgroupException, NoArticleException, DiskException);
 
   private:
     std::map<size_t, Newsgroup> groups;

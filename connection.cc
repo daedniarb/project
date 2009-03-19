@@ -25,6 +25,7 @@
 #include "connectionclosedexception.h"
 
 #include <iostream>
+#include <cstdlib>
 #include <cstring>       /* memcpy() */
 #include <csignal>       /* signal() */
 #include <sys/types.h>   /* socket(), connect(), read(), write() */

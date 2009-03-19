@@ -2,6 +2,7 @@
 #include "messagehandler.h"
 #include "database.h"
 #include "diskdatabase.h"
+#include <cstdlib>
 #include <string>
 #include <iostream>
 

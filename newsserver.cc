@@ -197,6 +197,11 @@ namespace client_server {
 		disconnect(conn, protocolError);;
 	    }
 	}
+	catch(NewsgroupExistsException){
+	    comm.sendCode(Protocol::ANS_NAK);
+	    comm.sendCode(Protocol::ERR_NG_ALREADY_EXISTS);
+	    comm.sendCode(Protocol::ANS_END);
+	}
 	catch(NoNewsgroupException){
 	    comm.sendCode(Protocol::ANS_NAK);
 	    comm.sendCode(Protocol::ERR_NG_DOES_NOT_EXIST);

@@ -1,6 +1,6 @@
 #include "protocol.h"
 #include "messagehandler.h"
-#include "util.h"
+
 /*
 typedef std::vector<int> Logger;
 private Connection conn;   // the connection
@@ -81,7 +81,7 @@ namespace client_server {
 	int n = recvInt();
 	if (n<0)
 	    throw ProtocolViolationException();
-	std::string result = sizettostring(n);
+	std::string result = "";
 	for (int i = 1; i<=n; i++) {
 	    char ch = static_cast<char>(conn->read());
 	    result+=ch;

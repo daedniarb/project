@@ -12,78 +12,86 @@
 #include <string>
 #include <vector>
 
-typedef std::vector<int> Logger;
+namespace client_server {
 
-class MessageHandler {
+    typedef std::vector<int> Logger;
+    using protocol::Protocol;
+
+    struct ProtocolViolationException{};
+
+    class MessageHandler {
     public:
-    /** Create a message handler.
-	@param c The connection to use messages
-    */
-    MessageHandler(client_server::Connection &c);
+	/** Create a message handler.
+	    @param c The connection to use messages
+	*/
+	MessageHandler(Connection &c);
 
-    /** Basic destructor
-    */
-    ~MessageHandler();
+	/** Basic destructor
+	 */
+	~MessageHandler();
 
-   /** Set the log window to use.
-	@param logWindow The log window
-    */
-    void setLogWindow(const Logger &log);
+	/** Set the log window to use.
+	    @param logWindow The log window
+	*/
+//	void setLogWindow(const Logger &log);
 
-    /** Transmit a code (a constant from the Protocol class).
-	@param code The code to transmit.
-	@throws ConnectionClosedException If the server died
-    */
-    void sendCode(int code) const throw(client_server::ConnectionClosedException);
+	/** Transmit a code (a constant from the Protocol class).
+	    @param code The code to transmit.
+	    @throws ConnectionClosedException If the server died
+	*/
+	void sendCode(int code) const throw(ConnectionClosedException);
 
-    /** Transmit an int value, according to the protocol.
-	@param value The value to transmit
-	@throws ConnectionClosedException If the server died
-    */
-    void sendInt(int value) const throw(client_server::ConnectionClosedException);
+	/** Transmit an int value, according to the protocol.
+	    @param value The value to transmit
+	    @throws ConnectionClosedException If the server died
+	*/
+	void sendInt(int value) const throw(ConnectionClosedException);
 
-    /** Transmit an int parameter, according to the protocol.
-	@param value The parameter to transmit
-	@throws ConnectionClosedException If the server died
-    */
-    void sendIntParameter(int param) const throw(client_server::ConnectionClosedException);
+	/** Transmit an int parameter, according to the protocol.
+	    @param value The parameter to transmit
+	    @throws ConnectionClosedException If the server died
+	*/
+	void sendIntParameter(int param) const throw(ConnectionClosedException);
 
-    /** Transmit a string parameter, according to the protocol.
-	@param value The parameter to transmit
-	@throws ConnectionClosedException If the server died
-    */
-    void sendStringParameter(std::string param) const throw(client_server::ConnectionClosedException);
+	/** Transmit a string parameter, according to the protocol.
+	    @param value The parameter to transmit
+	    @throws ConnectionClosedException If the server died
+	*/
+	void sendStringParameter(std::string param) const throw(ConnectionClosedException);
 
-    /** Receive a command code or an error code from the server.
-	@return The code
-	@throws ConnectionClosedException If the server died
-    */
-    int recvCode() const throw(client_server::ConnectionClosedException);
+	/** Receive a command code or an error code from the server.
+	    @return The code
+	    @throws ConnectionClosedException If the server died
+	*/
+	int recvCode() const throw(ConnectionClosedException);
 
-    /** Receive an int value from the server.
-	@return The int value
-	@throws ConnectionClosedException If the server died
-    */
-    int recvInt() const throw(client_server::ConnectionClosedException);
+	/** Receive an int value from the server.
+	    @return The int value
+	    @throws ConnectionClosedException If the server died
+	*/
+	int recvInt() const throw(ConnectionClosedException);
 
-    /** Receive an int parameter from the server.
-	@return The parameter value
-	@throws ConnectionClosedException If the server died
-    */
-    int recvIntParameter() const throw(client_server::ConnectionClosedException);
+	/** Receive an int parameter from the server.
+	    @return The parameter value
+	    @throws ConnectionClosedException If the server died
+	*/
+	int recvIntParameter() const throw(ConnectionClosedException, ProtocolViolationException);
 
-    /** Receive a string parameter from the server.
-	@return The parameter value
-	@throws ConnectionClosedException If the server died
-    */
-    std::string recvStringParameter() const throw(client_server::ConnectionClosedException);
+	/** Receive a string parameter from the server.
+	    @return The parameter value
+	    @throws ConnectionClosedException If the server died
+	*/
+	std::string recvStringParameter() const throw(ConnectionClosedException, ProtocolViolationException);
 
     private:
 
-    client_server::Connection conn;    	// the connection
-    Logger &logWindow; 			// the log window
+	Connection conn;    	// the connection
+//	Logger &logWindow; 			// the log window
 
-    void sendByte(int code) const throw(client_server::ConnectionClosedException);
-    int recvByte() const throw(client_server::ConnectionClosedException);
-}
+	void sendByte(int code) const throw(ConnectionClosedException);
+	int recvByte() const throw(ConnectionClosedException);
+    };
 
+} // End namespace
+
+#endif

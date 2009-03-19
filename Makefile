@@ -22,7 +22,7 @@ PROGS	= databasetest
 
 all: $(PROGS)
 
-databasetest: databasetest.o diskdatabase.o database.o databaseinterface.o article.o newsgroup.o util.o
+databasetest: databasetest.o diskdatabase.o database.o databaseinterface.o article.o newsgroup.o util.o connection.o messagehandler.o
 
 clean:
 	rm -f *.o
